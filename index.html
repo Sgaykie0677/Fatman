@@ -135,16 +135,74 @@
             padding: 20px;
         }
 
-        .shape-image {
+        .shape {
             width: 150px;
             height: 150px;
+            background-color: var(--module-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: transform 0.2s;
         }
 
-        .shape-image:active {
+        .shape:active {
             transform: scale(0.9);
         }
+
+        .shape-circle {
+            border-radius: 50%;
+        }
+
+        .shape-square {
+            border-radius: 15px;
+        }
+
+        .shape-triangle {
+            background: none;
+            width: 0; 
+            height: 0; 
+            border-left: 75px solid transparent;
+            border-right: 75px solid transparent;
+            border-bottom: 150px solid var(--module-color);
+        }
+
+        .shape-star {
+            background: none;
+            position: relative;
+            width: 0;
+            height: 0;
+            margin: 75px 0;
+            border-right: 150px solid transparent;
+            border-bottom: 110px solid var(--module-color);
+            border-left: 150px solid transparent;
+            transform: rotate(35deg);
+        }
+
+        .shape-star:before {
+            content: '';
+            position: absolute;
+            height: 0;
+            width: 0;
+            top: -65px;
+            left: -96px;
+            border-bottom: 110px solid var(--module-color);
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            transform: rotate(-35deg);
+        }
+
+        .shape-star:after {
+            content: '';
+            position: absolute;
+            height: 0;
+            width: 0;
+            top: -65px;
+            left: -96px;
+            border-right: 30px solid transparent;
+            border-left: 30px solid transparent;
+            border-bottom: 110px solid var(--module-color);
+            transform: rotate(-70deg);
+        }
+
 
         /* --- Numbers Module --- */
         #numbers-module {
@@ -160,19 +218,6 @@
             color: var(--module-color);
             text-shadow: 4px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-        }
-
-        #number-image-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            min-height: 100px;
-        }
-
-        #number-image-container img {
-            width: 80px;
-            margin: 5px;
         }
 
         /* --- Global --- */
@@ -218,7 +263,6 @@
             const moduleContent = document.getElementById('module-content');
             const backButton = document.querySelector('.back-button');
 
-            // Set up the speech function once to avoid conflicts
             const speak = (text) => {
                 if ('speechSynthesis' in window) {
                     const utterance = new SpeechSynthesisUtterance(text);
@@ -271,21 +315,21 @@
                         };
 
                         cycleButton.addEventListener('click', updateNumber);
-                        updateNumber(); // Initial display and speak
+                        updateNumber();
                     }
                 },
                 shapes: {
                     title: 'Learning Shapes',
                     content: `
                         <div id="shapes-module">
-                            <img class="shape-image" src="https://via.placeholder.com/150.png?text=Circle" alt="Circle" data-speak="Circle">
-                            <img class="shape-image" src="https://via.placeholder.com/150.png?text=Square" alt="Square" data-speak="Square">
-                            <img class="shape-image" src="https://via.placeholder.com/150.png?text=Triangle" alt="Triangle" data-speak="Triangle">
-                            <img class="shape-image" src="https://via.placeholder.com/150.png?text=Star" alt="Star" data-speak="Star">
+                            <div class="shape shape-circle" data-speak="Circle"></div>
+                            <div class="shape shape-square" data-speak="Square"></div>
+                            <div class="shape shape-triangle" data-speak="Triangle"></div>
+                            <div class="shape shape-star" data-speak="Star"></div>
                         </div>
                     `,
                     setup: () => {
-                        document.querySelectorAll('.shape-image').forEach(shape => {
+                        document.querySelectorAll('.shape').forEach(shape => {
                             shape.addEventListener('click', (e) => {
                                 speak(e.target.dataset.speak);
                             });
