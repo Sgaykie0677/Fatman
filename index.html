@@ -4,7 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grandson's Learning Adventures</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fceabb, #fb5c62);
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffc107;
+            color: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 3em;
+            text-shadow: 2px 2px #ff8c00;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .module-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .module {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .module:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .module img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 5px solid #ffc107;
+            transition: border-color 0.3s;
+        }
+
+        .module h3 {
+            color: #4682b4;
+            margin-top: 15px;
+            font-size: 1.5em;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #content-display {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        #back-button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+
+        #back-button:hover {
+            background-color: #e5533d;
+        }
+
+        .color-item, .number-item {
+            display: inline-block;
+            margin: 15px;
+        }
+
+        .color-item .color-box {
+            width: 150px;
+            height: 150px;
+            border-radius: 15px;
+            border: 5px solid white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-item p {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+
+        .number-item img {
+            width: 150px;
+            height: auto;
+            border: none;
+            border-radius: 0;
+        }
+
+        .rhyme-list button {
+            background-color: #32cd32;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+        }
+
+        .rhyme-list button:hover {
+            background-color: #228b22;
+        }
+
+        footer {
+            background-color: #4682b4;
+            color: white;
+            padding: 15px;
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -40,11 +181,88 @@
                 </div>
         </section>
     </main>
-    
+
     <footer>
         <p>&copy; 2024 Built with ❤️ for Little Learner</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modulesList = document.getElementById('modules-list');
+            const contentDisplay = document.getElementById('content-display');
+            const moduleContent = document.getElementById('module-content');
+            const backButton = document.getElementById('back-button');
+
+            const modules = {
+                'module-colors': {
+                    title: 'Learning Colors',
+                    content: `
+                        <div class="color-item"><div class="color-box" style="background-color: red;"></div><p>Red</p></div>
+                        <div class="color-item"><div class="color-box" style="background-color: blue;"></div><p>Blue</p></div>
+                        <div class="color-item"><div class="color-box" style="background-color: green;"></div><p>Green</p></div>
+                        <div class="color-item"><div class="color-box" style="background-color: yellow;"></div><p>Yellow</p></div>
+                        <div class="color-item"><div class="color-box" style="background-color: orange;"></div><p>Orange</p></div>
+                        <div class="color-item"><div class="color-box" style="background-color: purple;"></div><p>Purple</p></div>
+                    `
+                },
+                'module-numbers': {
+                    title: 'Learning Numbers',
+                    content: `
+                        <div class="number-item"><img src="https://via.placeholder.com/150.png?text=1" alt="Number 1"></div>
+                        <div class="number-item"><img src="https://via.placeholder.com/150.png?text=2" alt="Number 2"></div>
+                        <div class="number-item"><img src="https://via.placeholder.com/150.png?text=3" alt="Number 3"></div>
+                        <div class="number-item"><img src="https://via.placeholder.com/150.png?text=4" alt="Number 4"></div>
+                        <div class="number-item"><img src="https://via.placeholder.com/150.png?text=5" alt="Number 5"></div>
+                    `
+                },
+                'module-rhymes': {
+                    title: 'Nursery Rhymes',
+                    content: `
+                        <div class="rhyme-list">
+                            <button data-file="twinkle-twinkle.mp3">Twinkle, Twinkle</button>
+                            <button data-file="baabaa-black-sheep.mp3">Baa, Baa, Black Sheep</button>
+                            <button data-file="wheels-on-the-bus.mp3">The Wheels on the Bus</button>
+                            <button data-file="old-macdonald.mp3">Old MacDonald</button>
+                        </div>
+                    `
+                }
+            };
+
+            document.querySelectorAll('.module').forEach(module => {
+                module.addEventListener('click', () => {
+                    const moduleId = module.id;
+                    const data = modules[moduleId];
+                    
+                    if (data) {
+                        moduleContent.innerHTML = `<h2>${data.title}</h2>${data.content}`;
+                        modulesList.classList.add('hidden');
+                        contentDisplay.classList.remove('hidden');
+
+                        if (moduleId === 'module-rhymes') {
+                            document.querySelectorAll('.rhyme-list button').forEach(button => {
+                                button.addEventListener('click', (e) => {
+                                    const fileName = e.target.dataset.file;
+                                    playRhyme(fileName);
+                                });
+                            });
+                        }
+                    }
+                });
+            });
+
+            backButton.addEventListener('click', () => {
+                contentDisplay.classList.add('hidden');
+                modulesList.classList.remove('hidden');
+            });
+
+            function playRhyme(fileName) {
+                const audio = new Audio(`./audio/${fileName}`);
+                audio.play().catch(e => {
+                    alert("Could not play the audio file. Make sure the file exists and is named correctly in the 'audio' folder.");
+                    console.error(e);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
