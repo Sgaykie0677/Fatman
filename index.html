@@ -3,23 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grandson's Learning Adventures</title>
+    <title>Learning Fun for Grandson</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
+        
+        :root {
+            --bg-color: #fceabb;
+            --main-color: #ffc107;
+            --accent-color: #fb5c62;
+            --module-color: #4682b4;
+            --text-color: #333;
+        }
 
         body {
             font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #fceabb, #fb5c62);
-            color: #333;
+            background: linear-gradient(135deg, var(--bg-color), var(--accent-color));
+            color: var(--text-color);
             text-align: center;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
 
         header {
-            background-color: #ffc107;
-            color: #fff;
-            padding: 30px;
+            background-color: var(--main-color);
+            color: white;
+            padding: 20px;
+            width: 100%;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
@@ -28,122 +42,145 @@
             text-shadow: 2px 2px #ff8c00;
         }
 
-        main {
+        .container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .module-list-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
         }
 
-        .module-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .module {
-            background-color: #fff;
+        .module-button {
+            background-color: white;
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             width: 250px;
+            margin-bottom: 20px;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .module:hover {
+        .module-button:hover {
             transform: translateY(-10px);
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .module img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 5px solid #ffc107;
-            transition: border-color 0.3s;
-        }
-
-        .module h3 {
-            color: #4682b4;
-            margin-top: 15px;
+        .module-button h3 {
+            color: var(--module-color);
+            margin: 0;
             font-size: 1.5em;
         }
 
-        .hidden {
-            display: none;
-        }
-
-        #content-display {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
-            max-width: 800px;
-        }
-
-        #back-button {
-            background-color: #ff6347;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1em;
-            margin-bottom: 20px;
-            transition: background-color 0.3s;
-        }
-
-        #back-button:hover {
-            background-color: #e5533d;
-        }
-
-        .color-item, .number-item {
-            display: inline-block;
-            margin: 15px;
-        }
-
-        .color-item .color-box {
-            width: 150px;
-            height: 150px;
-            border-radius: 15px;
-            border: 5px solid white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .color-item p {
-            font-size: 1.5em;
-            margin-top: 10px;
-        }
-
-        .number-item img {
-            width: 150px;
-            height: auto;
-            border: none;
-            border-radius: 0;
-        }
-
-        .rhyme-list button {
-            background-color: #32cd32;
+        .back-button {
+            background-color: var(--accent-color);
             color: white;
             border: none;
             padding: 15px 30px;
-            margin: 10px;
             border-radius: 10px;
             cursor: pointer;
             font-size: 1.2em;
+            margin: 20px auto;
             transition: background-color 0.3s;
         }
-
-        .rhyme-list button:hover {
-            background-color: #228b22;
+        
+        .back-button:hover {
+            background-color: #e5533d;
         }
 
+        /* --- Colors Module --- */
+        #colors-module {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .color-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .color-circle:active {
+            transform: scale(0.9);
+        }
+        
+        /* --- Shapes Module --- */
+        #shapes-module {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .shape-image {
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .shape-image:active {
+            transform: scale(0.9);
+        }
+
+        /* --- Numbers Module --- */
+        #numbers-module {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #number-display {
+            font-size: 10em;
+            color: #fff;
+            text-shadow: 4px 4px var(--module-color);
+            margin-bottom: 20px;
+        }
+
+        #number-image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
+        }
+
+        #number-image-container img {
+            width: 80px;
+            margin: 5px;
+        }
+
+        /* --- Global --- */
         footer {
-            background-color: #4682b4;
+            background-color: var(--module-color);
             color: white;
             padding: 15px;
-            margin-top: 50px;
+            width: 100%;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -153,115 +190,135 @@
         <p>Let's learn and play together!</p>
     </header>
 
-    <main>
-        <section id="modules-list">
-            <h2>Let's Learn!</h2>
-            <div class="module-container">
-                <div class="module" id="module-colors">
-                    <img src="https://via.placeholder.com/100x100.png?text=Colors" alt="Colors">
-                    <h3>Colors 🎨</h3>
-                    <p>Learn the colors of the rainbow!</p>
-                </div>
-                <div class="module" id="module-numbers">
-                    <img src="https://via.placeholder.com/100x100.png?text=Numbers" alt="Numbers">
-                    <h3>Numbers 🔢</h3>
-                    <p>Count from 1 to 5!</p>
-                </div>
-                <div class="module" id="module-rhymes">
-                    <img src="https://via.placeholder.com/100x100.png?text=Rhymes" alt="Nursery Rhymes">
-                    <h3>Nursery Rhymes 🎶</h3>
-                    <p>Listen to fun songs!</p>
-                </div>
+    <div class="container">
+        <div id="main-menu" class="module-list-container">
+            <h2>Choose an activity!</h2>
+            <div class="module-button" data-module="colors">
+                <h3>Colors 🎨</h3>
             </div>
-        </section>
+            <div class="module-button" data-module="numbers">
+                <h3>Numbers 🔢</h3>
+            </div>
+            <div class="module-button" data-module="shapes">
+                <h3>Shapes ⭐</h3>
+            </div>
+        </div>
 
-        <section id="content-display" class="hidden">
-            <button id="back-button">← Back to Modules</button>
-            <div id="module-content">
-                </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Built with ❤️ for Little Learner</p>
-    </footer>
-
+        <div id="activity-screen" class="hidden">
+            <button class="back-button">← Back to Menu</button>
+            <div id="module-content"></div>
+        </div>
+    </div>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const modulesList = document.getElementById('modules-list');
-            const contentDisplay = document.getElementById('content-display');
+            const mainMenu = document.getElementById('main-menu');
+            const activityScreen = document.getElementById('activity-screen');
             const moduleContent = document.getElementById('module-content');
-            const backButton = document.getElementById('back-button');
+            const backButton = document.querySelector('.back-button');
 
             const modules = {
-                'module-colors': {
+                colors: {
                     title: 'Learning Colors',
                     content: `
-                        <div class="color-item"><div class="color-box" style="background-color: red;"></div><p>Red</p></div>
-                        <div class="color-item"><div class="color-box" style="background-color: blue;"></div><p>Blue</p></div>
-                        <div class="color-item"><div class="color-box" style="background-color: green;"></div><p>Green</p></div>
-                        <div class="color-item"><div class="color-box" style="background-color: yellow;"></div><p>Yellow</p></div>
-                        <div class="color-item"><div class="color-box" style="background-color: orange;"></div><p>Orange</p></div>
-                        <div class="color-item"><div class="color-box" style="background-color: purple;"></div><p>Purple</p></div>
-                    `
+                        <div id="colors-module">
+                            <div class="color-circle" style="background-color: red;" data-speak="Red"></div>
+                            <div class="color-circle" style="background-color: blue;" data-speak="Blue"></div>
+                            <div class="color-circle" style="background-color: green;" data-speak="Green"></div>
+                            <div class="color-circle" style="background-color: yellow;" data-speak="Yellow"></div>
+                            <div class="color-circle" style="background-color: orange;" data-speak="Orange"></div>
+                            <div class="color-circle" style="background-color: purple;" data-speak="Purple"></div>
+                        </div>
+                    `,
+                    setup: () => {
+                        document.querySelectorAll('.color-circle').forEach(circle => {
+                            circle.addEventListener('click', (e) => {
+                                speak(e.target.dataset.speak);
+                            });
+                        });
+                    }
                 },
-                'module-numbers': {
+                numbers: {
                     title: 'Learning Numbers',
                     content: `
-                        <div class="number-item"><img src="https://via.placeholder.com/150.png?text=1" alt="Number 1"></div>
-                        <div class="number-item"><img src="https://via.placeholder.com/150.png?text=2" alt="Number 2"></div>
-                        <div class="number-item"><img src="https://via.placeholder.com/150.png?text=3" alt="Number 3"></div>
-                        <div class="number-item"><img src="https://via.placeholder.com/150.png?text=4" alt="Number 4"></div>
-                        <div class="number-item"><img src="https://via.placeholder.com/150.png?text=5" alt="Number 5"></div>
-                    `
-                },
-                'module-rhymes': {
-                    title: 'Nursery Rhymes',
-                    content: `
-                        <div class="rhyme-list">
-                            <button data-file="twinkle-twinkle.mp3">Twinkle, Twinkle</button>
-                            <button data-file="baabaa-black-sheep.mp3">Baa, Baa, Black Sheep</button>
-                            <button data-file="wheels-on-the-bus.mp3">The Wheels on the Bus</button>
-                            <button data-file="old-macdonald.mp3">Old MacDonald</button>
+                        <div id="numbers-module">
+                            <h2 id="number-display"></h2>
+                            <div id="number-image-container"></div>
+                            <button class="number-cycle-button back-button">Tap to Count!</button>
                         </div>
-                    `
+                    `,
+                    setup: () => {
+                        const numberDisplay = document.getElementById('number-display');
+                        const numberImageContainer = document.getElementById('number-image-container');
+                        const cycleButton = document.querySelector('.number-cycle-button');
+                        let count = 0;
+                        const numbersToSpeak = ["one", "two", "three", "four", "five"];
+                        
+                        const updateNumber = () => {
+                            count = (count % 5) + 1;
+                            numberDisplay.textContent = count;
+                            numberImageContainer.innerHTML = '';
+                            for(let i = 0; i < count; i++) {
+                                const img = document.createElement('img');
+                                img.src = `https://via.placeholder.com/80.png?text=${count}`;
+                                numberImageContainer.appendChild(img);
+                            }
+                            speak(numbersToSpeak[count - 1]);
+                        };
+
+                        cycleButton.addEventListener('click', updateNumber);
+                        updateNumber();
+                    }
+                },
+                shapes: {
+                    title: 'Learning Shapes',
+                    content: `
+                        <div id="shapes-module">
+                            <img class="shape-image" src="https://via.placeholder.com/150.png?text=Circle" alt="Circle" data-speak="Circle">
+                            <img class="shape-image" src="https://via.placeholder.com/150.png?text=Square" alt="Square" data-speak="Square">
+                            <img class="shape-image" src="https://via.placeholder.com/150.png?text=Triangle" alt="Triangle" data-speak="Triangle">
+                            <img class="shape-image" src="https://via.placeholder.com/150.png?text=Star" alt="Star" data-speak="Star">
+                        </div>
+                    `,
+                    setup: () => {
+                        document.querySelectorAll('.shape-image').forEach(shape => {
+                            shape.addEventListener('click', (e) => {
+                                speak(e.target.dataset.speak);
+                            });
+                        });
+                    }
                 }
             };
 
-            document.querySelectorAll('.module').forEach(module => {
-                module.addEventListener('click', () => {
-                    const moduleId = module.id;
-                    const data = modules[moduleId];
-                    
-                    if (data) {
-                        moduleContent.innerHTML = `<h2>${data.title}</h2>${data.content}`;
-                        modulesList.classList.add('hidden');
-                        contentDisplay.classList.remove('hidden');
+            const speak = (text) => {
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.rate = 0.8; // Slow down the speech a bit for clarity
+                    window.speechSynthesis.speak(utterance);
+                } else {
+                    alert("Your browser doesn't support text-to-speech. Please use a modern browser like Chrome or Firefox.");
+                }
+            };
 
-                        if (moduleId === 'module-rhymes') {
-                            document.querySelectorAll('.rhyme-list button').forEach(button => {
-                                button.addEventListener('click', (e) => {
-                                    const fileName = e.target.dataset.file;
-                                    playRhyme(fileName);
-                                });
-                            });
+            document.querySelectorAll('.module-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const moduleName = button.dataset.module;
+                    const module = modules[moduleName];
+                    if (module) {
+                        moduleContent.innerHTML = `<h2>${module.title}</h2>${module.content}`;
+                        mainMenu.classList.add('hidden');
+                        activityScreen.classList.remove('hidden');
+                        if (module.setup) {
+                            module.setup();
                         }
                     }
                 });
             });
 
             backButton.addEventListener('click', () => {
-                contentDisplay.classList.add('hidden');
-                modulesList.classList.remove('hidden');
+                activityScreen.classList.add('hidden');
+                mainMenu.classList.remove('hidden');
             });
-
-            function playRhyme(fileName) {
-                const audio = new Audio(`./audio/${fileName}`);
-                audio.play().catch(e => {
-                    alert("Could not play the audio file. Make sure the file exists and is named correctly in the 'audio' folder.");
-                    console.error(e);
-                });
-            }
         });
     </script>
 </body>
