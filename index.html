@@ -156,8 +156,9 @@
 
         #number-display {
             font-size: 10em;
-            color: #fff;
-            text-shadow: 4px 4px var(--module-color);
+            font-weight: bold;
+            color: var(--module-color);
+            text-shadow: 4px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
 
@@ -217,6 +218,17 @@
             const moduleContent = document.getElementById('module-content');
             const backButton = document.querySelector('.back-button');
 
+            // Set up the speech function once to avoid conflicts
+            const speak = (text) => {
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.rate = 0.8; 
+                    window.speechSynthesis.speak(utterance);
+                } else {
+                    alert("Your browser doesn't support text-to-speech. Please use a modern browser like Chrome or Firefox.");
+                }
+            };
+
             const modules = {
                 colors: {
                     title: 'Learning Colors',
@@ -242,14 +254,12 @@
                     title: 'Learning Numbers',
                     content: `
                         <div id="numbers-module">
-                            <h2 id="number-display"></h2>
-                            <div id="number-image-container"></div>
+                            <h2 id="number-display" data-speak="one">1</h2>
                             <button class="number-cycle-button back-button">Tap to Count!</button>
                         </div>
                     `,
                     setup: () => {
                         const numberDisplay = document.getElementById('number-display');
-                        const numberImageContainer = document.getElementById('number-image-container');
                         const cycleButton = document.querySelector('.number-cycle-button');
                         let count = 0;
                         const numbersToSpeak = ["one", "two", "three", "four", "five"];
@@ -257,17 +267,11 @@
                         const updateNumber = () => {
                             count = (count % 5) + 1;
                             numberDisplay.textContent = count;
-                            numberImageContainer.innerHTML = '';
-                            for(let i = 0; i < count; i++) {
-                                const img = document.createElement('img');
-                                img.src = `https://via.placeholder.com/80.png?text=${count}`;
-                                numberImageContainer.appendChild(img);
-                            }
                             speak(numbersToSpeak[count - 1]);
                         };
 
                         cycleButton.addEventListener('click', updateNumber);
-                        updateNumber();
+                        updateNumber(); // Initial display and speak
                     }
                 },
                 shapes: {
@@ -287,16 +291,6 @@
                             });
                         });
                     }
-                }
-            };
-
-            const speak = (text) => {
-                if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.rate = 0.8; // Slow down the speech a bit for clarity
-                    window.speechSynthesis.speak(utterance);
-                } else {
-                    alert("Your browser doesn't support text-to-speech. Please use a modern browser like Chrome or Firefox.");
                 }
             };
 
